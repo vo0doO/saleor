@@ -37,7 +37,7 @@ ROOT_URLCONF = 'saleor.urls'
 WSGI_APPLICATION = 'saleor.wsgi.application'
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    # ('vo0', 'exenoobe@gmail.com'),
 )
 MANAGERS = ADMINS
 
@@ -55,8 +55,8 @@ DATABASES = {
         conn_max_age=600)}
 
 
-TIME_ZONE = 'America/Chicago'
-LANGUAGE_CODE = 'en'
+TIME_ZONE = 'Europe/Moscow'
+LANGUAGE_CODE = 'ru'
 LANGUAGES = [
     ('ar', _('Arabic')),
     ('az', _('Azerbaijani')),
@@ -173,7 +173,7 @@ TEMPLATES = [{
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
+# export SECRET_KEY='pax-0!@kc!0!#dsk%84_a&8c+0t8j42r61q(ouyh+k&a+3lvhu'
 MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -271,11 +271,17 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'RESULTS_CACHE_SIZE': 100}
 
-ENABLE_SILK = get_bool_from_env('ENABLE_SILK', False)
+ENABLE_SILK = get_bool_from_env('ENABLE_SILK', True)
 if ENABLE_SILK:
     MIDDLEWARE.insert(0, 'silk.middleware.SilkyMiddleware')
     INSTALLED_APPS.append('silk')
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -380,7 +386,7 @@ bootstrap4 = {
 TEST_RUNNER = 'tests.runner.PytestTestRunner'
 
 ALLOWED_HOSTS = get_list(
-    os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1'))
+    os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,0.0.0.0'))
 ALLOWED_GRAPHQL_ORIGINS = os.environ.get('ALLOWED_GRAPHQL_ORIGINS', '*')
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
